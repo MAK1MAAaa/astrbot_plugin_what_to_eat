@@ -53,7 +53,10 @@ class WhatToEatPlugin(Star):
             Path(__file__).resolve().parent,
             StarTools.get_data_dir(PLUGIN_NAME),
         )
-        logger.info(f"吃什么插件初始化成功，关键词: {self.trigger_keywords}")
+        image_count = sum(len(paths) for paths in self.image_manager.all_images.values())
+        logger.info(
+            f"吃什么插件初始化成功，关键词: {self.trigger_keywords}，已加载 {image_count} 张配图"
+        )
 
     @staticmethod
     def _session_key(event: AstrMessageEvent) -> SessionKey:

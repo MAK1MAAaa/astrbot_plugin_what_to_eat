@@ -1,7 +1,7 @@
 name: astrbot_plugin_what_to_eat
 desc: 关键词触发随机推荐美食或复读“是啊，吃什么”，支持独立冷却、食物库和配图。
 author: C₂₂H₂₅NO₆（上游） / makima（适配）
-version: v1.0.0
+version: v1.0.1
 repo: https://github.com/MAK1MAAaa/astrbot_plugin_what_to_eat
 display_name: 是啊，吃什么
 astrbot_version: ">=4.5.7"

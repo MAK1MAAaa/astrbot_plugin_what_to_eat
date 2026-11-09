@@ -283,10 +283,23 @@ class EntryTests(unittest.IsolatedAsyncioTestCase):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.data_dir = Path(self.temporary.name)
+        self.plugin_dir = self.data_dir / "plugin"
+        self.plugin_dir.mkdir()
         self.clock = FakeClock()
 
     def plugin(self, **config):
-        with patch.object(ENTRY.StarTools, "get_data_dir", return_value=self.data_dir) as directory:
+        with (
+            patch.object(
+                ENTRY.StarTools, "get_data_dir", return_value=self.data_dir
+            ) as directory,
+            patch.object(
+                ENTRY,
+                "ImageManager",
+                side_effect=lambda config, _plugin_dir, data_dir: ImageManager(
+                    config, self.plugin_dir, data_dir
+                ),
+            ),
+        ):
             plugin = ENTRY.WhatToEatPlugin(FakeContext(), config)
             directory.assert_called_once_with("astrbot_plugin_what_to_eat")
         plugin.rate_limiter._clock = self.clock
